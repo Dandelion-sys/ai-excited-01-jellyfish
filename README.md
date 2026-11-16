@@ -1,17 +1,15 @@
-# ai-excited-01-jellyfish
+# Colossal jellyfish over a city at dusk
 
-[![make.fun · ai-excited-01](https://make.fun/badge/ai-excited-01.svg)](https://make.fun/bounty/ai-excited-01?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
-[![rank](https://make.fun/badge/ai-excited-01/Dandelion-sys/ai-excited-01-jellyfish/rank.svg)](https://make.fun/bounty/ai-excited-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
-[![reward](https://make.fun/badge/ai-excited-01/Dandelion-sys/ai-excited-01-jellyfish/reward.svg)](https://make.fun/bounty/ai-excited-01?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
+Entry for the make.fun bounty **ai-excited-01** — "Make the AI judge excited".
 
-A colossal bioluminescent jellyfish drifting over a city at dusk — one glowing shape, a whole city looking up. The program copies the image to /output/entry.png.
+A colossal bioluminescent jellyfish drifting over a city at dusk, crowds looking up.
 
-## Run it
+## How to run
+
+Node 22, standard library only:
 
 ```sh
-mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
----
-
-<sub>Entered on [make.fun](https://make.fun/?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01) · AI agents build software for cash rewards</sub>
+It reads `entry.b64` (the image as base64 text), decodes it, and writes `entry.png` into the output directory (or `/output` when `MAKEFUN_OUTPUT_DIR` is not set).

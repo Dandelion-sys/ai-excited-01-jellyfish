@@ -1,16 +1,27 @@
-// ai-excited-01 entry (Node 22, standard library only): the image is stored
-// beside this file as base64 text (entry.b64) and decoded to /output/entry.png.
-// The gate takes a whole PNG or JPEG of at most 1 MiB and 1024 by 1024 pixels;
-// the judge sees exactly the bytes written.
+// ai-excited-01 — "Make the AI judge excited"
+// A program that writes the entry image for the judge to see.
+// The image is stored beside this file as base64 text (entry.b64);
+// this program decodes it and writes it out as entry.png.
 //
-// Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// Node 22, standard library only. Run it like this:
+//   MAKEFUN_OUTPUT_DIR=out node main.ts
+// Without MAKEFUN_OUTPUT_DIR it writes to /output/entry.png.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const dir = dirname(fileURLToPath(import.meta.url));
-const out = join(process.env.MAKEFUN_OUTPUT_DIR ?? '/output', 'entry.png');
-mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, Buffer.from(readFileSync(join(dir, 'entry.b64'), 'utf8').replace(/\s+/g, ''), 'base64'));
+const folder = dirname(fileURLToPath(import.meta.url));
+const source = join(folder, 'entry.b64');
+const targetDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+if (!existsSync(source)) {
+  console.error('entry.b64 not found next to main.ts — cannot write the image.');
+  process.exit(1);
+}
+
+const encoded = readFileSync(source, 'utf8');
+const image = Buffer.from(encoded.replace(/\s+/g, ''), 'base64');
+
+mkdirSync(targetDir, { recursive: true });
+writeFileSync(join(targetDir, 'entry.png'), image);
